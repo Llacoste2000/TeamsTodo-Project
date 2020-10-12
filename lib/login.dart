@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'package:todo/helpers/flash.dart';
+import 'package:todo/users/connect.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -55,5 +61,24 @@ class Login extends StatelessWidget {
 }
 
 void __handleLogin(BuildContext context) {
+  Future main() async {
+    await DotEnv().load('.env');
+
+    Future<User> fetchUser() async {
+      final response = await http.get(DotEnv().env['VAR_NAME'] + '/users');
+
+      if (response.statusCode == 200) {
+        // la logique viendra ici pour connecter à l'API ...
+
+        User user = User.fromJson(jsonDecode(response.body));
+
+        return user;
+      } else {
+        showTopFlash(context, "Failed", "Error while loging in", flashError);
+      }
+    }
+  }
+
+  // la logique viendra ici pour connecter à l'API ...
   Navigator.pushNamed(context, '/todo');
 }
