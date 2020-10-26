@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
+import 'package:todo/users/connect.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -66,7 +71,7 @@ class _RegisterState extends State<Register> {
                         InputDecoration(labelText: 'Confirmer le mot de passe'),
                   ),
                   RaisedButton(
-                    onPressed: () ²{
+                    onPressed: () {
                       submitRegister();
                     },
                     child: Text("S'enregistrer"),
@@ -88,22 +93,36 @@ class _RegisterState extends State<Register> {
         email == '' ||
         password == '' ||
         confirmPassword == '') {
-      print('Tous les champs doient être remplis.');
-      return;
+      throw 'Tous les champs doient être remplis.';
     } else {
       if (!EmailValidator.validate(email)) {
-        print('vous devez renseigner un emai valide');
-        return;
+        throw 'vous devez renseigner un emai valide';
       }
       if (password != confirmPassword) {
-        print('Les mots de passes ne sont pas identiques');
-        return;
+        throw 'Les mots de passes ne sont pas identiques';
       }
-      return register();
-    }
-  }
 
-  register() {
-    print('register');
+      await DotEnv().load('.env');
+      var url = DotEnv().env['API_URL'] + '/users';
+
+      var response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            "firstname": firstname,
+            "lastname": lastname,
+            "email": email,
+            "password": password
+          }));
+
+      if (response.statusCode == 201) {
+        Navigator.pushNamed(context, '/login');
+      } else {
+        var body = jsonDecode(response.body);
+        print(body);
+        throw body['message'];
+      }
+    }
   }
 }
