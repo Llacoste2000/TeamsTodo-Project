@@ -98,9 +98,6 @@ Future loginToApi(BuildContext context, login, password) async {
     decodedToken['token'] = token['token'];
 
     User user = User.fromJson(decodedToken);
-
-    print(user.toJson());
-
     return user;
   } else {
     var body = jsonDecode(response.body);

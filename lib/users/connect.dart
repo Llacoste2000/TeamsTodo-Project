@@ -8,8 +8,6 @@ class User {
   User({this.id, this.firstName, this.lastName, this.email, this.token});
 
   factory User.fromJson(Map<String, dynamic> json) {
-    print(json);
-
     return User(
         id: json['id'],
         firstName: json['firstName'],
