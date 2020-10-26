@@ -9,7 +9,7 @@ class TodoApp extends StatelessWidget {
     return new MaterialApp(
       // Start the app with the "/" named route. In this case, the app starts
       // on the FirstScreen widget.
-      initialRoute: '/',
+      initialRoute: '/register',
       routes: routes,
     );
   }
