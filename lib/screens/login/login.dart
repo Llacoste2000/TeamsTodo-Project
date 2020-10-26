@@ -54,7 +54,7 @@ class LoginScreenState extends State<LoginScreen>
           ),
           new FlatButton(
             onPressed: () =>
-                Navigator.pushReplacementNamed(context, "/home"),
+                Navigator.pushReplacementNamed(context, "/todo"),
             child: new Text('Yes'),
           ),
         ],
@@ -78,8 +78,8 @@ class LoginScreenState extends State<LoginScreen>
                   decoration: new BoxDecoration(
                       gradient: new LinearGradient(
                         colors: <Color>[
-                          const Color.fromRGBO(162, 146, 199, 0.8),
-                          const Color.fromRGBO(51, 51, 63, 0.9),
+                          const Color.fromRGBO(6, 52, 94, 0.8),
+                          const Color.fromRGBO(85, 169, 244, 0.9),
                         ],
                         stops: [0.2, 1.0],
                         begin: const FractionalOffset(0.0, 0.0),
@@ -95,7 +95,7 @@ class LoginScreenState extends State<LoginScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               new Tick(image: tick),
-                              new FormContainer(),
+                              new FormSignIn(),
                               new SignUp()
                             ],
                           ),

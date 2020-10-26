@@ -78,7 +78,7 @@ class StaggerAnimation extends StatelessWidget {
                 buttomZoomOut.value == 70 ? 60.0 : buttomZoomOut.value,
                 alignment: FractionalOffset.center,
                 decoration: new BoxDecoration(
-                  color: const Color.fromRGBO(247, 64, 106, 1.0),
+                  color: const Color.fromRGBO(12, 86, 141, 1.0),
                   borderRadius: buttomZoomOut.value < 400
                       ? new BorderRadius.all(const Radius.circular(30.0))
                       : new BorderRadius.all(const Radius.circular(0.0)),
@@ -108,7 +108,7 @@ class StaggerAnimation extends StatelessWidget {
                 shape: buttomZoomOut.value < 500
                     ? BoxShape.circle
                     : BoxShape.rectangle,
-                color: const Color.fromRGBO(247, 64, 106, 1.0),
+                color: const Color.fromRGBO(12, 86, 141, 1.0),
               ),
             ),
           )),
@@ -119,7 +119,7 @@ class StaggerAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     buttonController.addListener(() {
       if (buttonController.isCompleted) {
-        Navigator.pushNamed(context, "/home");
+        Navigator.pushNamed(context, "/todo");
       }
     });
     return new AnimatedBuilder(
