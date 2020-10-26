@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import './InputFields.dart';
 
-class FormContainer extends StatelessWidget {
+class FormSignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return (new Container(
       margin: new EdgeInsets.symmetric(horizontal: 20.0),
+      width: MediaQuery.of(context).size.width * 0.50,
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
