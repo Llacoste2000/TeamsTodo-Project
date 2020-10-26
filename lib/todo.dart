@@ -8,6 +8,27 @@ class TodoList extends StatefulWidget {
 class TodoListState extends State<TodoList> {
   List<String> _todoItems = [];
 
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: AppBar(
+        title: const Text('TodoList APP'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.person),
+            tooltip: 'Connexion',
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: _buildTodoList(),
+      floatingActionButton: new FloatingActionButton(
+          onPressed: _pushAddTodoScreen,
+          tooltip: 'Add task',
+          child: new Icon(Icons.add)),
+    );
+  }
+
   void _addTodoItem(String task) {
     // Only add the task if the user actually entered something
     if (task.length > 0) {
@@ -53,27 +74,6 @@ class TodoListState extends State<TodoList> {
   Widget _buildTodoItem(String todoText, int index) {
     return new ListTile(
         title: new Text(todoText), onTap: () => _promptRemoveTodoItem(index));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: AppBar(
-        title: const Text('TodoList APP'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.person),
-            tooltip: 'Connexion',
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: _buildTodoList(),
-      floatingActionButton: new FloatingActionButton(
-          onPressed: _pushAddTodoScreen,
-          tooltip: 'Add task',
-          child: new Icon(Icons.add)),
-    );
   }
 
   void _pushAddTodoScreen() {
