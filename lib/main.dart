@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/routes/routes.dart';
+import 'package:todo/state/user_model.dart';
 
-void main() => runApp(new TodoApp());
+void main() => runApp(
+      ChangeNotifierProvider(
+        create: (context) => UserModel(),
+        child: new TodoApp(),
+      ),
+    );
 
 class TodoApp extends StatelessWidget {
   @override
