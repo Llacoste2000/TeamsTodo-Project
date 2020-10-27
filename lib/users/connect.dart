@@ -1,9 +1,11 @@
+import 'package:provider/provider.dart';
+
 class User {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String token;
+  int id;
+  String firstName;
+  String lastName;
+  String email;
+  String token;
 
   User({this.id, this.firstName, this.lastName, this.email, this.token});
 
