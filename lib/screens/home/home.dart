@@ -16,9 +16,7 @@ class _HomeState extends State<Home> {
       String user = await StorageService.readValue('user');
 
       return user;
-    } catch (e) {
-      print(e.toString());
-    }
+    } catch (e) {}
   }
 
   @override
@@ -39,7 +37,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print(user);
     if (user != null) {
       return TodoList();
     } else {

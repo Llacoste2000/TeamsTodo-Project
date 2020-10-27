@@ -76,7 +76,6 @@ Future __handleLogin(BuildContext context, login, password) async {
     await StorageService.writeValue('user', user.toJson().toString());
     Navigator.pushNamed(context, '/todo');
   } catch (e) {
-    print(e.toString());
     showTopFlash(context, "Failed", e.toString(), flashError);
   }
 }

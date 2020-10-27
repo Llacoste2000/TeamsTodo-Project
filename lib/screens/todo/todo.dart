@@ -20,7 +20,9 @@ class TodoListState extends State<TodoList> {
           IconButton(
             icon: const Icon(Icons.person),
             tooltip: 'Connexion',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/usermenu');
+            },
           ),
         ],
       ),
