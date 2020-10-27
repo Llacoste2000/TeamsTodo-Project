@@ -99,7 +99,6 @@ Future loginToApi(BuildContext context, login, password) async {
       body: jsonEncode(<String, String>{"email": login, "password": password}));
 
   if (response.statusCode == 200) {
-    // la logique viendra ici pour connecter à l'API ...
     var token = jsonDecode(response.body);
     Map<String, dynamic> decodedToken = JwtDecoder.decode(response.body);
 
