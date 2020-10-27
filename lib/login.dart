@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/flash.dart';
 import 'package:todo/helpers/storage.dart';
@@ -99,12 +98,9 @@ Future loginToApi(BuildContext context, login, password) async {
       body: jsonEncode(<String, String>{"email": login, "password": password}));
 
   if (response.statusCode == 200) {
-    var token = jsonDecode(response.body);
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(response.body);
+    var userData = jsonDecode(response.body);
 
-    decodedToken['token'] = token['token'];
-
-    User user = User.fromJson(decodedToken);
+    User user = User.fromJson(userData);
     userProvider.setUser(user);
     return user;
   } else {
