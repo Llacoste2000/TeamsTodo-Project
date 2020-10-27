@@ -5,7 +5,7 @@ import 'package:todo/register.dart';
 import 'package:todo/todo.dart';
 
 var routes = <String, WidgetBuilder>{
-  '/todo': (context) => TodoList(),
+  '/': (context) => TodoList(),
   '/login': (context) => Login(),
   '/register': (context) => Register()
 };
