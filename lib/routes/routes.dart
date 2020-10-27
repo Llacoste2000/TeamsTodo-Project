@@ -4,10 +4,6 @@ import 'package:todo/screens/todo/todo.dart';
 
 import 'package:todo/login.dart';
 import 'package:todo/register.dart';
-import 'package:todo/todo.dart';
-
-import '../login.dart';
-import '../todo.dart';
 
 var routes = <String, WidgetBuilder>{
   '/': (context) => TodoList(),
