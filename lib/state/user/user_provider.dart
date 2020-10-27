@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:todo/users/connect.dart';
+import 'package:todo/state/user/user_model.dart';
 
-class UserModel extends ChangeNotifier {
+class UserProvider extends ChangeNotifier {
   User _user;
 
   String get userToken => this._user.token;

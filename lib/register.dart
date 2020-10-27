@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/flash.dart';
-import 'package:todo/state/user_model.dart';
-import 'package:todo/users/connect.dart';
+import 'package:todo/state/user/user_model.dart';
+import 'package:todo/state/user/user_provider.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -92,7 +92,7 @@ class _RegisterState extends State<Register> {
 //  Mettre fonctions en async et throw err
 
   submitRegister() async {
-    final UserModel userProvider = Provider.of(context, listen: false);
+    final UserProvider userProvider = Provider.of(context, listen: false);
 
     if (firstname == '' ||
         lastname == '' ||
@@ -154,7 +154,7 @@ Future __handleLogin(BuildContext context, login, password) async {
 }
 
 Future loginToApi(BuildContext context, login, password) async {
-  UserModel userProvider = Provider.of(context, listen: false);
+  UserProvider userProvider = Provider.of(context, listen: false);
 
   if (login == "" || password == "") {
     throw 'Please enter a valid login and password.';
