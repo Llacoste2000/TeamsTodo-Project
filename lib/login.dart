@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/helpers/flash.dart';
+import 'package:todo/state/user_model.dart';
 import 'package:todo/users/connect.dart';
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final UserModel user = Provider.of(context);
+
     final login = TextEditingController();
     final password = TextEditingController();
 
@@ -77,6 +81,8 @@ Future __handleLogin(BuildContext context, login, password) async {
 }
 
 Future loginToApi(BuildContext context, login, password) async {
+  UserModel userProvider = Provider.of(context, listen: false);
+
   if (login == "" || password == "") {
     throw 'Please enter a valid login and password.';
   }
@@ -98,6 +104,7 @@ Future loginToApi(BuildContext context, login, password) async {
     decodedToken['token'] = token['token'];
 
     User user = User.fromJson(decodedToken);
+    userProvider.setUser(user);
     return user;
   } else {
     var body = jsonDecode(response.body);
