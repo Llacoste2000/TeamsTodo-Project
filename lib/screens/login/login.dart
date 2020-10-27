@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:todo/components/Form.dart';
+import 'package:todo/components/SignInButton.dart';
+import 'package:todo/components/SignUpLink.dart';
+import 'package:todo/components/WhiteTick.dart';
 
 import 'styles.dart';
 import 'loginAnimation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/animation.dart';
 import 'dart:async';
-import '../../Components/SignUpLink.dart';
-import '../../Components/Form.dart';
-import '../../Components/SignInButton.dart';
-import '../../Components/WhiteTick.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
+
   @override
   LoginScreenState createState() => new LoginScreenState();
 }
@@ -22,6 +23,7 @@ class LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
   AnimationController _loginButtonController;
   var animationStatus = 0;
+
   @override
   void initState() {
     super.initState();
@@ -44,22 +46,22 @@ class LoginScreenState extends State<LoginScreen>
 
   Future<bool> _onWillPop() {
     return showDialog(
-      context: context,
-      child: new AlertDialog(
-        title: new Text('Are you sure?'),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: new Text('No'),
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Are you sure?'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, "/todo"),
+                child: new Text('Yes'),
+              ),
+            ],
           ),
-          new FlatButton(
-            onPressed: () =>
-                Navigator.pushReplacementNamed(context, "/todo"),
-            child: new Text('Yes'),
-          ),
-        ],
-      ),
-    ) ??
+        ) ??
         false;
   }
 
@@ -77,14 +79,14 @@ class LoginScreenState extends State<LoginScreen>
               child: new Container(
                   decoration: new BoxDecoration(
                       gradient: new LinearGradient(
-                        colors: <Color>[
-                          const Color.fromRGBO(6, 52, 94, 0.8),
-                          const Color.fromRGBO(85, 169, 244, 0.9),
-                        ],
-                        stops: [0.2, 1.0],
-                        begin: const FractionalOffset(0.0, 0.0),
-                        end: const FractionalOffset(0.0, 1.0),
-                      )),
+                    colors: <Color>[
+                      const Color.fromRGBO(6, 52, 94, 0.8),
+                      const Color.fromRGBO(85, 169, 244, 0.9),
+                    ],
+                    stops: [0.2, 1.0],
+                    begin: const FractionalOffset(0.0, 0.0),
+                    end: const FractionalOffset(0.0, 1.0),
+                  )),
                   child: new ListView(
                     padding: const EdgeInsets.all(0.0),
                     children: <Widget>[
@@ -101,19 +103,19 @@ class LoginScreenState extends State<LoginScreen>
                           ),
                           animationStatus == 0
                               ? new Padding(
-                            padding: const EdgeInsets.only(bottom: 50.0),
-                            child: new InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    animationStatus = 1;
-                                  });
-                                  _playAnimation();
-                                },
-                                child: new SignIn()),
-                          )
+                                  padding: const EdgeInsets.only(bottom: 50.0),
+                                  child: new InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          animationStatus = 1;
+                                        });
+                                        _playAnimation();
+                                      },
+                                      child: new SignIn()),
+                                )
                               : new StaggerAnimation(
-                              buttonController:
-                              _loginButtonController.view),
+                                  buttonController:
+                                      _loginButtonController.view),
                         ],
                       ),
                     ],
