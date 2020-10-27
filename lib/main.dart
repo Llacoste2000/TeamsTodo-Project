@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/routes/routes.dart';
-import 'package:todo/state/user_model.dart';
+import 'package:todo/state/user/user_provider.dart';
 
 void main() => runApp(
       ChangeNotifierProvider(
-        create: (context) => UserModel(),
+        create: (context) => UserProvider(),
         child: new TodoApp(),
       ),
     );
@@ -13,9 +13,9 @@ void main() => runApp(
 class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+//    StorageService.deleteAll();
     return new MaterialApp(
-      // Start the app with the "/" named route. In this case, the app starts
-      // on the FirstScreen widget.
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: routes,
     );
