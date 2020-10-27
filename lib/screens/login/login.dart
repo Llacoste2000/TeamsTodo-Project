@@ -1,16 +1,24 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'styles.dart';
 import 'loginAnimation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/animation.dart';
 import 'dart:async';
-import '../../Components/SignUpLink.dart';
-import '../../Components/Form.dart';
-import '../../Components/SignInButton.dart';
-import '../../Components/WhiteTick.dart';
+import '../../components/SignUpLink.dart';
+import '../../components/Form.dart';
+import '../../components/SignInButton.dart';
+import '../../components/WhiteTick.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:todo/state/user_model.dart';
+import 'package:todo/users/connect.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -67,6 +75,11 @@ class LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     timeDilation = 0.4;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    final UserModel user = Provider.of(context);
+
+    final login = TextEditingController();
+    final password = TextEditingController();
+
     return (new WillPopScope(
         onWillPop: _onWillPop,
         child: new Scaffold(
@@ -119,6 +132,42 @@ class LoginScreenState extends State<LoginScreen>
                     ],
                   ))),
         )));
+  }
+}
+
+void __handleLogin(BuildContext context) {
+  Navigator.pushNamed(context, '/todo');
+}
+
+Future loginToApi(BuildContext context, login, password) async {
+  UserModel userProvider = Provider.of(context, listen: false);
+
+  if (login == "" || password == "") {
+    throw 'Please enter a valid login and password.';
+  }
+
+  await DotEnv().load('.env');
+
+  var url = DotEnv().env['API_URL'] + '/login_check';
+  var response = await http.post(url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{"email": login, "password": password}));
+
+  if (response.statusCode == 200) {
+    // la logique viendra ici pour connecter à l'API ...
+    var token = jsonDecode(response.body);
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(response.body);
+
+    decodedToken['token'] = token['token'];
+
+    User user = User.fromJson(decodedToken);
+    userProvider.setUser(user);
+    return user;
+  } else {
+    var body = jsonDecode(response.body);
+    throw body['message'];
   }
 }
 
