@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/flash.dart';
+import 'package:todo/helpers/storage.dart';
 import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
@@ -69,12 +70,15 @@ class Login extends StatelessWidget {
             )));
   }
 }
+
 Future __handleLogin(BuildContext context, login, password) async {
   try {
-    await loginToApi(context, login, password);
+    User user = await loginToApi(context, login, password);
+    await StorageService.writeValue('user', user.toJson().toString());
     Navigator.pushNamed(context, '/todo');
   } catch (e) {
-    showTopFlash(context, "Failed", e, flashError);
+    print(e.toString());
+    showTopFlash(context, "Failed", e.toString(), flashError);
   }
 }
 
