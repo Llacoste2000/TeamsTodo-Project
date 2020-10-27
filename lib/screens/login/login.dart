@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/components/Form.dart';
 import 'package:todo/components/SignInButton.dart';
 import 'package:todo/components/SignUpLink.dart';
 import 'package:todo/components/WhiteTick.dart';
+import 'package:todo/state/user/user_provider.dart';
 
 import 'styles.dart';
 import 'loginAnimation.dart';
@@ -69,7 +71,7 @@ class LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     timeDilation = 0.4;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    final UserModel user = Provider.of(context);
+    final UserProvider user = Provider.of(context);
 
     final login = TextEditingController();
     final password = TextEditingController();
