@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/flash.dart';
+import 'package:todo/helpers/storage.dart';
 import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
@@ -28,6 +29,7 @@ class Login extends StatelessWidget {
                 Container(
                     padding: EdgeInsets.all(10),
                     child: TextField(
+                      controller: login,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
                         filled: true,
@@ -38,6 +40,7 @@ class Login extends StatelessWidget {
                 Container(
                     padding: EdgeInsets.all(10),
                     child: TextField(
+                      controller: password,
                       obscureText: true,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
@@ -56,7 +59,7 @@ class Login extends StatelessWidget {
                       padding: EdgeInsets.all(10.0),
                       splashColor: Colors.blueAccent,
                       onPressed: () {
-                        __handleLogin(context);
+                        __handleLogin(context, login.text, password.text);
                       },
                       child: Text(
                         "Login",
@@ -68,8 +71,15 @@ class Login extends StatelessWidget {
   }
 }
 
-void __handleLogin(BuildContext context) {
-  Navigator.pushNamed(context, '/todo');
+Future __handleLogin(BuildContext context, login, password) async {
+  try {
+    User user = await loginToApi(context, login, password);
+    await StorageService.writeValue('user', user.toJson().toString());
+    Navigator.pushNamed(context, '/todo');
+  } catch (e) {
+    print(e.toString());
+    showTopFlash(context, "Failed", e.toString(), flashError);
+  }
 }
 
 Future loginToApi(BuildContext context, login, password) async {
