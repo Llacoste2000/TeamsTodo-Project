@@ -1,5 +1,3 @@
-import 'package:provider/provider.dart';
-
 class User {
   int id;
   String firstName;
