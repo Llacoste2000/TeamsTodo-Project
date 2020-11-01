@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/storage.dart';
+import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
 class Group extends StatefulWidget {
@@ -118,23 +119,20 @@ class _GroupState extends State<Group> {
     );
   }
 
-  // ignore: missing_return
-  Future<Map> fetchGroups() async {
-    String id = await StorageService.readValue('id');
-    String token = await StorageService.readValue('token');
+  Future fetchGroups() async {
+    User user = User.fromJson(await StorageService.readValue('user'));
 
     await DotEnv().load('.env');
 
-    var url = DotEnv().env['API_URL'] + '/users/' + id;
+    String url = DotEnv().env['API_URL'] + "/users/${user.id}";
 
     var response = await http.get(url, headers: <String, String>{
-      HttpHeaders.authorizationHeader: 'Bearer ' + token,
+      HttpHeaders.authorizationHeader: 'Bearer ' + user.token,
       'Content-Type': 'application/json; charset=UTF-8',
     });
 
     Map<String, dynamic> data = jsonDecode(response.body);
-
-    for (var i = 0; i < data['groups'].length; i++) {
+    for (int i = 0; i < data['groups'].length; i++) {
       _groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
     }
 
