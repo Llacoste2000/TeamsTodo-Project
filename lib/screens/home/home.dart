@@ -144,5 +144,12 @@ class _HomeState extends State<Home> {
         inactiveColor: Colors.blueGrey[600],
       ),
     ];
+  @override
+  Widget build(BuildContext context) {
+    if (user != null) {
+      return TodoList();
+    } else {
+      return Login();
+    }
   }
 }
