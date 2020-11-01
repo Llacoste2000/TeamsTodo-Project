@@ -13,7 +13,8 @@ class _HomeState extends State<Home> {
 
   Future _checkLogin(BuildContext context) async {
     try {
-      String user = await StorageService.readValue('user');
+      //await StorageService.deleteAll();
+      String user = await StorageService.readValue('token');
 
       return user;
     } catch (e) {}

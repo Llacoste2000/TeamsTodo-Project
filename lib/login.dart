@@ -73,7 +73,13 @@ class Login extends StatelessWidget {
 Future __handleLogin(BuildContext context, login, password) async {
   try {
     User user = await loginToApi(context, login, password);
-    await StorageService.writeValue('user', user.toJson().toString());
+    //await StorageService.writeValue('user', user.toJson().toString());
+    await StorageService.writeValue('firstName', user.firstName);
+    await StorageService.writeValue('lastName', user.lastName);
+    await StorageService.writeValue('email', user.email);
+    await StorageService.writeValue('id', user.id.toString());
+    await StorageService.writeValue('token', user.token);
+
     Navigator.pushNamed(context, '/todo');
   } catch (e) {
     showTopFlash(context, "Failed", e.toString(), flashError);
