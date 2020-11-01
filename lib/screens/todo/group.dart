@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/storage.dart';
+import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
 class Group extends StatefulWidget {
