@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/state/user_model.dart';
+import 'package:todo/state/user/user_provider.dart';
 
 class TodoList extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
-    UserModel userProvider = Provider.of(context);
+    UserProvider userProvider = Provider.of(context);
     return new Scaffold(
       appBar: AppBar(
         title: const Text('TodoList APP'),

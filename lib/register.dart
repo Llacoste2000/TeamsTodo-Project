@@ -4,11 +4,10 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/flash.dart';
-import 'package:todo/state/user_model.dart';
-import 'package:todo/users/connect.dart';
+import 'package:todo/state/user/user_model.dart';
+import 'package:todo/state/user/user_provider.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -92,7 +91,7 @@ class _RegisterState extends State<Register> {
 //  Mettre fonctions en async et throw err
 
   submitRegister() async {
-    final UserModel userProvider = Provider.of(context, listen: false);
+    final UserProvider userProvider = Provider.of(context, listen: false);
 
     if (firstname == '' ||
         lastname == '' ||
@@ -154,7 +153,7 @@ Future __handleLogin(BuildContext context, login, password) async {
 }
 
 Future loginToApi(BuildContext context, login, password) async {
-  UserModel userProvider = Provider.of(context, listen: false);
+  UserProvider userProvider = Provider.of(context, listen: false);
 
   if (login == "" || password == "") {
     throw 'Please enter a valid login and password.';
@@ -170,12 +169,9 @@ Future loginToApi(BuildContext context, login, password) async {
       body: jsonEncode(<String, String>{"email": login, "password": password}));
 
   if (response.statusCode == 200) {
-    var token = jsonDecode(response.body);
-    Map<String, dynamic> decodedToken = JwtDecoder.decode(response.body);
+    var userData = jsonDecode(response.body);
 
-    decodedToken['token'] = token['token'];
-
-    User user = User.fromJson(decodedToken);
+    User user = User.fromJson(userData);
     userProvider.setUser(user);
     return user;
   } else {
