@@ -1,16 +1,18 @@
+import 'dart:async';
+
+import 'package:flutter/animation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/components/Form.dart';
 import 'package:todo/components/SignInButton.dart';
 import 'package:todo/components/SignUpLink.dart';
 import 'package:todo/components/WhiteTick.dart';
 
-import 'styles.dart';
 import 'loginAnimation.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/animation.dart';
-import 'dart:async';
-import 'package:flutter/services.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
+import 'styles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -69,7 +71,7 @@ class LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     timeDilation = 0.4;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    final UserModel user = Provider.of(context);
+    final user = Provider.of(context);
 
     final login = TextEditingController();
     final password = TextEditingController();

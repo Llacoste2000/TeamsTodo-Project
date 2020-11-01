@@ -12,6 +12,14 @@ class TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
+    var _selectedIndex = 0;
+
+    void _onItemTapped(int index) {
+      if (index == 1) {
+        Navigator.pushNamed(context, '/group');
+      }
+    }
+
     UserProvider userProvider = Provider.of(context);
     return new Scaffold(
       appBar: AppBar(
@@ -31,6 +39,21 @@ class TodoListState extends State<TodoList> {
           onPressed: _pushAddTodoScreen,
           tooltip: 'Add task',
           child: new Icon(Icons.add)),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Personal List',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.group),
+            label: 'Groups',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue[800],
+        onTap: _onItemTapped,
+      ),
     );
   }
 
