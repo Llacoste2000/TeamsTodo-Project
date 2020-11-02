@@ -82,7 +82,7 @@ class LoginScreenState extends State<LoginScreen>
         animationStatus = 1;
       });
       _playAnimation();
-      userProvider.setUser(user);
+      Timer(Duration(milliseconds: 2500), () => userProvider.setUser(user));
     } catch (e) {
       print(e.toString());
       showTopFlash(context, "Failed", e.toString(), flashError);

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:provider/provider.dart';
+import 'package:todo/state/user/user_provider.dart';
+
 class StaggerAnimation extends StatelessWidget {
   StaggerAnimation({Key key, this.buttonController})
       : buttonSqueezeanimation = new Tween(
@@ -119,7 +122,7 @@ class StaggerAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     buttonController.addListener(() {
       if (buttonController.isCompleted) {
-        Navigator.pushNamed(context, "/todo");
+        // Navigator.pushNamed(context, "/todo");
       }
     });
     return new AnimatedBuilder(
