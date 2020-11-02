@@ -20,7 +20,7 @@ class TodoListState extends State<TodoList> {
       }
     }
 
-    UserProvider userProvider = Provider.of(context);
+    GlobalProvider userProvider = Provider.of(context);
     return new Scaffold(
       appBar: AppBar(
         title: const Text('TodoList APP'),

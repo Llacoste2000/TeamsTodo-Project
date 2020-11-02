@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:todo/components/login/Form.dart';
 import 'package:todo/components/login/SignInButton.dart';
-import 'package:todo/components/login/SignUpLink.dart';
 import 'package:todo/components/login/loginLogo.dart';
 import 'package:todo/helpers/flash.dart';
 import 'package:todo/helpers/storage.dart';
@@ -75,7 +74,7 @@ class LoginScreenState extends State<LoginScreen>
   }
 
   Future __handleLogin(BuildContext context, login, password) async {
-    UserProvider userProvider = Provider.of(context, listen: false);
+    GlobalProvider userProvider = Provider.of(context, listen: false);
     try {
       User user = await loginToApi(context, login, password);
       await StorageService.writeValue('user', user.toJson());
@@ -94,7 +93,7 @@ class LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     timeDilation = 0.4;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    final UserProvider user = Provider.of(context);
+    final GlobalProvider user = Provider.of(context);
 
     final login = TextEditingController();
     final password = TextEditingController();
@@ -130,8 +129,7 @@ class LoginScreenState extends State<LoginScreen>
                               new FormSignIn(login, password),
                               SizedBox(
                                 height: 150.0,
-                              )
-                              // new SignUp() TODO: Commenté car le Navigator.pushNamed surle onPressed du bouton ne fonctionne pas
+                              ),
                             ],
                           ),
                           animationStatus == 0

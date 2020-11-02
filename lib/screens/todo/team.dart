@@ -9,58 +9,53 @@ import 'package:todo/helpers/storage.dart';
 import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
-class Group extends StatefulWidget {
+class Team extends StatefulWidget {
   Function(String) callback;
 
-  Group(this.callback);
+  Team(this.callback);
 
   @override
-  _GroupState createState() => _GroupState();
+  _TeamState createState() => _TeamState();
 }
 
-class GroupCard {
-  String name;
-  String id;
-
-  GroupCard(this.id, this.name);
-
-  String get getId => this.id;
-}
-
-class _GroupState extends State<Group> {
-  List<GroupCard> _groups = [];
+class _TeamState extends State<Team> {
+  List<TeamCard> _teams = [];
 
   @override
   Widget build(BuildContext context) {
-    GlobalProvider userProvider = Provider.of(context);
+    GlobalProvider provider = Provider.of(context, listen: false);
 
-    Future<void> _pushAddGroup(name) async {
+    Future<void> _pushAddTeam(name) async {
       String user = await StorageService.readValue('user');
-      userProvider.setUser(User.fromJson(user));
+      provider.setUser(User.fromJson(user));
 
       await DotEnv().load('.env');
 
-      var url = DotEnv().env['API_URL'] + '/groups';
+      var url = DotEnv().env['API_URL'] + '/teams';
+
+      var groupId = provider.groupId;
 
       var response = await http.post(url,
           headers: <String, String>{
-            HttpHeaders.authorizationHeader: 'Bearer ' + userProvider.userToken,
+            HttpHeaders.authorizationHeader: 'Bearer ' + provider.userToken,
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, String>{"name": name}));
-
+          body: jsonEncode(<String, String>{
+            "name": name,
+            "teamgroup": "/api/groups/" + groupId.toString()
+          }));
       // @TODO add to state to push it ?
     }
 
-    void _pushAddGroupScreen() {
+    void _pushAddTeamScreen() {
       // Push this page
       Navigator.of(context).push(new MaterialPageRoute(builder: (context) {
         return new Scaffold(
-            appBar: new AppBar(title: new Text('Add a new group')),
+            appBar: new AppBar(title: new Text('Add a new team')),
             body: new TextField(
               autofocus: true,
               onSubmitted: (val) {
-                _pushAddGroup(val);
+                _pushAddTeam(val);
                 Navigator.pop(context); // Close the add page
               },
               decoration: new InputDecoration(
@@ -70,19 +65,23 @@ class _GroupState extends State<Group> {
       }));
     }
 
-    GlobalProvider provider = Provider.of(context, listen: false);
-
-    return new Scaffold(
-      appBar: AppBar(
-        title: const Text('TodoList APP - Groups'),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: Text('TodoList APP - Team'), actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.close_rounded),
+          tooltip: 'Close team page',
+          onPressed: () {
+            widget.callback('groupList');
+          },
+        )
+      ]),
       body: Center(
         child: Column(
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
               child: Text(
-                'My groups',
+                'My teams',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
@@ -92,25 +91,26 @@ class _GroupState extends State<Group> {
             Expanded(
               // @TODO Iterate over a variable...
               child: FutureBuilder<String>(
-                future: fetchGroups(),
+                future: fetchTeams(provider.groupId),
                 builder:
                     (BuildContext context, AsyncSnapshot<String> snapshot) {
                   List<Widget> children;
                   List<Widget> childs = [];
                   if (snapshot.hasData) {
-                    for (var i = 0; i < _groups.length; i++) {
+                    for (var i = 0; i < _teams.length; i++) {
                       childs.add(new Container(
                         padding: EdgeInsets.only(left: 80.0, top: 10.0),
                         child: Row(children: <Widget>[
-                          Expanded(child: Text(_groups[i].name)),
+                          Expanded(child: Text(_teams[i].name)),
                           Expanded(
                               child: FlatButton(
                             textColor: Color(0xFF6200EE),
                             onPressed: () {
-                              widget.callback('team');
-                              provider.setGroupId(_groups[i].id);
+                              // @TODO Modify this to go to the todolists of the team
+                              //widget.callback('team');
+                              //provider.setGroupId(_teams[i].id);
                             },
-                            child: Text('See group'),
+                            child: Text('See team'),
                           ))
                         ]),
                       ));
@@ -155,35 +155,45 @@ class _GroupState extends State<Group> {
         ),
       ),
       floatingActionButton: new FloatingActionButton(
-          onPressed: _pushAddGroupScreen,
+          onPressed: _pushAddTeamScreen,
           tooltip: 'Add group',
           child: new Icon(Icons.add)),
     );
   }
 
-  Future<String> fetchGroups() async {
+  Future<String> fetchTeams(groupId) async {
     User user = User.fromJson(await StorageService.readValue('user'));
 
     await DotEnv().load('.env');
 
-    String url = DotEnv().env['API_URL'] + "/users/${user.id}";
+    String url = DotEnv().env['API_URL'] + "/groups/$groupId";
 
     var response = await http.get(url, headers: <String, String>{
       HttpHeaders.authorizationHeader: 'Bearer ' + user.token,
       'Content-Type': 'application/json; charset=UTF-8',
     });
 
+    print(response.body);
+
     Map<String, dynamic> data = jsonDecode(response.body);
-    for (int i = 0; i < data['groups'].length; i++) {
+    for (int i = 0; i < data['teams'].length; i++) {
       //_groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
 
-      GroupCard group = new GroupCard(
-          data['groups'][i]['@id'].toString().split('/').last.toString(),
-          data['groups'][i]['name']);
+      TeamCard team = new TeamCard(
+          data['teams'][i]['id'].toString(), data['teams'][i]['name']);
 
-      _groups.add(group);
+      _teams.add(team);
     }
 
     return response.body;
   }
+}
+
+class TeamCard {
+  String name;
+  String id;
+
+  TeamCard(this.id, this.name);
+
+  String get getId => this.id;
 }

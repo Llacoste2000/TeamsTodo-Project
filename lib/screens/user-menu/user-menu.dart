@@ -18,7 +18,7 @@ class _UserMenuState extends State<UserMenu> {
       body: RawMaterialButton(
         onPressed: () async {
           try {
-            UserProvider userProvider = Provider.of(context, listen: false);
+            GlobalProvider userProvider = Provider.of(context, listen: false);
             await StorageService.deleteAll();
             userProvider.deleteUser();
           } catch (e) {

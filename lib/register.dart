@@ -91,7 +91,7 @@ class _RegisterState extends State<Register> {
 //  Mettre fonctions en async et throw err
 
   submitRegister() async {
-    final UserProvider userProvider = Provider.of(context, listen: false);
+    final GlobalProvider userProvider = Provider.of(context, listen: false);
 
     if (firstname == '' ||
         lastname == '' ||
@@ -152,7 +152,7 @@ Future __handleLogin(BuildContext context, login, password) async {
 }
 
 Future loginToApi(BuildContext context, login, password) async {
-  UserProvider userProvider = Provider.of(context, listen: false);
+  GlobalProvider userProvider = Provider.of(context, listen: false);
 
   if (login == "" || password == "") {
     throw 'Please enter a valid login and password.';
