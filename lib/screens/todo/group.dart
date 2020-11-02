@@ -94,8 +94,8 @@ class _GroupState extends State<Group> {
                 builder:
                     (BuildContext context, AsyncSnapshot<String> snapshot) {
                   List<Widget> children;
+                  List<Widget> childs = [];
                   if (snapshot.hasData) {
-                    List<Widget> childs = [];
                     for (var i = 0; i < _groups.length; i++) {
                       childs.add(new Text(_groups[i].name));
                     }
@@ -167,6 +167,6 @@ class _GroupState extends State<Group> {
       _groups.add(group);
     }
 
-//    print(_groups);
+    return response.body;
   }
 }
