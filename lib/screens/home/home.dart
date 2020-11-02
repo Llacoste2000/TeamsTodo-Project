@@ -20,7 +20,6 @@ class _HomeState extends State<Home> {
   String groupPage = 'groupList';
 
   callback(String data) {
-    print('louis je taime');
     setState(() {
       groupPage = data;
     });
@@ -45,7 +44,7 @@ class _HomeState extends State<Home> {
   }
 
   Future _checkLogin(BuildContext context) async {
-    UserProvider userProvider = Provider.of(context, listen: false);
+    GlobalProvider userProvider = Provider.of(context, listen: false);
     try {
       String user = await StorageService.readValue('user');
       userProvider.setUser(User.fromJson(user));
@@ -56,7 +55,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = Provider.of(context);
+    GlobalProvider userProvider = Provider.of(context);
 
     if (userProvider.userAuth == null && _controller.index >= 2) {
       setState(() {

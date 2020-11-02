@@ -74,7 +74,7 @@ class LoginScreenState extends State<LoginScreen>
   }
 
   Future __handleLogin(BuildContext context, login, password) async {
-    UserProvider userProvider = Provider.of(context, listen: false);
+    GlobalProvider userProvider = Provider.of(context, listen: false);
     try {
       User user = await loginToApi(context, login, password);
       await StorageService.writeValue('user', user.toJson());
@@ -93,7 +93,7 @@ class LoginScreenState extends State<LoginScreen>
   Widget build(BuildContext context) {
     timeDilation = 0.4;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    final UserProvider user = Provider.of(context);
+    final GlobalProvider user = Provider.of(context);
 
     final login = TextEditingController();
     final password = TextEditingController();

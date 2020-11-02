@@ -6,7 +6,7 @@ import 'package:todo/state/user/user_provider.dart';
 
 void main() => runApp(
       ChangeNotifierProvider(
-        create: (context) => UserProvider(),
+        create: (context) => GlobalProvider(),
         child: new TodoApp(),
       ),
     );

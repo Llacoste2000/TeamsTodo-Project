@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/state/user/user_provider.dart';
 
 class Team extends StatefulWidget {
   Function(String) callback;
@@ -12,6 +14,8 @@ class Team extends StatefulWidget {
 class _TeamState extends State<Team> {
   @override
   Widget build(BuildContext context) {
+    GlobalProvider provider = Provider.of(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(title: Text('TodoList APP - Team'), actions: <Widget>[
         IconButton(
@@ -23,7 +27,7 @@ class _TeamState extends State<Team> {
         )
       ]),
       body: Center(
-        child: Text(widget.callback.toString()),
+        child: Text(provider.groupId == null ? "loading..." : provider.groupId),
       ),
     );
   }

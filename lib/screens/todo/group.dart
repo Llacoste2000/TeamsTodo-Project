@@ -23,6 +23,8 @@ class GroupCard {
   String id;
 
   GroupCard(this.id, this.name);
+
+  String get getId => this.id;
 }
 
 class _GroupState extends State<Group> {
@@ -30,7 +32,7 @@ class _GroupState extends State<Group> {
 
   @override
   Widget build(BuildContext context) {
-    UserProvider userProvider = Provider.of(context);
+    GlobalProvider userProvider = Provider.of(context);
 
     Future<void> _pushAddGroup(name) async {
       String token = await StorageService.readValue('token');
@@ -67,6 +69,8 @@ class _GroupState extends State<Group> {
       }));
     }
 
+    GlobalProvider provider = Provider.of(context, listen: false);
+
     return new Scaffold(
       appBar: AppBar(
         title: const Text('TodoList APP - Groups'),
@@ -102,7 +106,8 @@ class _GroupState extends State<Group> {
                               child: FlatButton(
                             textColor: Color(0xFF6200EE),
                             onPressed: () {
-                              widget.callback(_groups[i].id);
+                              widget.callback('team');
+                              provider.setGroupId(_groups[i].id);
                             },
                             child: Text('See group'),
                           ))
@@ -171,8 +176,9 @@ class _GroupState extends State<Group> {
     for (int i = 0; i < data['groups'].length; i++) {
       //_groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
 
-      GroupCard group =
-          new GroupCard(data['groups'][i]['@id'], data['groups'][i]['name']);
+      GroupCard group = new GroupCard(
+          data['groups'][i]['@id'].toString().split('/').last.toString(),
+          data['groups'][i]['name']);
 
       _groups.add(group);
     }
