@@ -24,7 +24,7 @@ class FormSignIn extends StatelessWidget {
                       fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(),
-                      labelText: 'Login',
+                      labelText: 'Email',
                       icon: new Icon(
                           Icons.person_outline,
                           color: Colors.white)

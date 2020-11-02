@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/storage.dart';
-import 'package:todo/register.dart';
+import 'file:///D:/Users/Bourbon/Documents/Ynov_B3_Info/dev-mobile/android-studio-projects/TeamsTodo-Project/lib/screens/register/register.dart';
 import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/todo/group.dart';
 import 'package:todo/screens/todo/todo.dart';
