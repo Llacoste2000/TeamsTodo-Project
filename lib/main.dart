@@ -11,6 +11,8 @@ void main() => runApp(
     );
 
 class TodoApp extends StatelessWidget {
+  static const String appTitle = 'TodoTeams';
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
