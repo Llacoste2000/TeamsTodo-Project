@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
@@ -74,14 +75,15 @@ class LoginScreenState extends State<LoginScreen>
   }
 
   Future __handleLogin(BuildContext context, login, password) async {
+    UserProvider userProvider = Provider.of(context, listen: false);
     try {
       User user = await loginToApi(context, login, password);
-      await StorageService.writeValue('user', user.toJson().toString());
+      await StorageService.writeValue('user', user.toJson());
       setState(() {
         animationStatus = 1;
       });
+      userProvider.setUser(user);
       _playAnimation();
-      // Navigator.pushNamed(context, '/todo');
     } catch (e) {
       print(e.toString());
       showTopFlash(context, "Failed", e.toString(), flashError);
@@ -151,8 +153,6 @@ class LoginScreenState extends State<LoginScreen>
 }
 
 Future loginToApi(BuildContext context, login, password) async {
-  UserProvider userProvider = Provider.of(context, listen: false);
-
   if (login == "" || password == "") {
     throw 'Please enter a valid login and password.';
   }
@@ -167,10 +167,7 @@ Future loginToApi(BuildContext context, login, password) async {
       body: jsonEncode(<String, String>{"email": login, "password": password}));
 
   if (response.statusCode == 200) {
-    var userData = jsonDecode(response.body);
-
-    User user = User.fromJson(userData);
-    userProvider.setUser(user);
+    User user = User.fromJsonResponse(response.body);
     return user;
   } else {
     var body = jsonDecode(response.body);
