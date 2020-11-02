@@ -1,22 +1,23 @@
+import 'dart:async';
+
+import 'package:flutter/animation.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'file:///D:/Users/Bourbon/Documents/Ynov_B3_Info/dev-mobile/android-studio-projects/TeamsTodo-Project/lib/components/login/Form.dart';
+import 'package:todo/components/login/Form.dart';
 import 'package:todo/components/login/SignInButton.dart';
 import 'package:todo/components/login/SignUpLink.dart';
 import 'package:todo/components/login/loginLogo.dart';
 import 'package:todo/helpers/flash.dart';
 import 'package:todo/helpers/storage.dart';
 
-import 'styles.dart';
 import 'loginAnimation.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/animation.dart';
-import 'dart:async';
-import 'package:flutter/services.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
+import 'styles.dart';
 import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
@@ -136,7 +137,8 @@ class LoginScreenState extends State<LoginScreen>
                                   padding: const EdgeInsets.only(bottom: 50.0),
                                   child: new InkWell(
                                       onTap: () {
-                                        __handleLogin(context, login.text, password.text);
+                                        __handleLogin(
+                                            context, login.text, password.text);
                                       },
                                       child: new SignIn()),
                                 )

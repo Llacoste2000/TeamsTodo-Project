@@ -12,4 +12,9 @@ class UserProvider extends ChangeNotifier {
     this._user = user;
     notifyListeners();
   }
+
+  void deleteUser() {
+    this._user = null;
+    notifyListeners();
+  }
 }

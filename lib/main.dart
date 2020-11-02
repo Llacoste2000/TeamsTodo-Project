@@ -13,9 +13,7 @@ void main() => runApp(
 class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-//    StorageService.deleteAll();
     return new MaterialApp(
-      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: routes,
     );

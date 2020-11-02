@@ -132,7 +132,6 @@ class _RegisterState extends State<Register> {
         __handleLogin(context, email, password);
       } else {
         var body = jsonDecode(response.body);
-        print(body);
         throw body['message'];
       }
     }

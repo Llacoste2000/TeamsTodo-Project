@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/helpers/storage.dart';
-import 'package:todo/helpers/storage.dart';
 import 'package:todo/state/user/user_provider.dart';
 
 class TodoList extends StatefulWidget {
@@ -14,18 +12,18 @@ class TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
-    StorageService.deleteAll();
+    var _selectedIndex = 0;
+
+    void _onItemTapped(int index) {
+      if (index == 1) {
+        Navigator.pushNamed(context, '/group');
+      }
+    }
+
     UserProvider userProvider = Provider.of(context);
     return new Scaffold(
       appBar: AppBar(
         title: const Text('TodoList APP'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.person),
-            tooltip: 'Connexion',
-            onPressed: () {},
-          ),
-        ],
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
