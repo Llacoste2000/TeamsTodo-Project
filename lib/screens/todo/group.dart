@@ -175,7 +175,6 @@ class _GroupState extends State<Group> {
 
     Map<String, dynamic> data = jsonDecode(response.body);
     for (int i = 0; i < data['groups'].length; i++) {
-      //_groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
 
       GroupCard group = new GroupCard(
           data['groups'][i]['@id'].toString().split('/').last.toString(),
