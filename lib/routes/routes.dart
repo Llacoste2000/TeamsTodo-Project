@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-
-import '../login.dart';
-import '../todo.dart';
+import 'file:///D:/Users/Bourbon/Documents/Ynov_B3_Info/dev-mobile/android-studio-projects/TeamsTodo-Project/lib/screens/register/register.dart';
+import 'package:todo/screens/home/home.dart';
+import 'package:todo/screens/login/login.dart';
+import 'package:todo/screens/todo/todo.dart';
+import 'package:todo/screens/user-menu/user-menu.dart';
 
 var routes = <String, WidgetBuilder>{
-  '/': (context) => Login(),
+  '/': (context) => Home(),
   '/todo': (context) => TodoList(),
+  '/login': (context) => LoginScreen(),
+  '/usermenu': (context) => UserMenu(),
+  '/register': (context) => Register(),
+  //'/group': (context) => Group(),
+  //Team.routeName: (context) => Team(),
 };
