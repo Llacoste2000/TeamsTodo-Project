@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/components/Form.dart';
-import 'package:todo/components/SignInButton.dart';
-import 'package:todo/components/SignUpLink.dart';
-import 'package:todo/components/WhiteTick.dart';
+import 'file:///D:/Users/Bourbon/Documents/Ynov_B3_Info/dev-mobile/android-studio-projects/TeamsTodo-Project/lib/components/login/Form.dart';
+import 'package:todo/components/login/SignInButton.dart';
+import 'package:todo/components/login/SignUpLink.dart';
+import 'package:todo/components/login/loginLogo.dart';
 import 'package:todo/helpers/flash.dart';
 import 'package:todo/helpers/storage.dart';
 
@@ -136,10 +136,6 @@ class LoginScreenState extends State<LoginScreen>
                                   padding: const EdgeInsets.only(bottom: 50.0),
                                   child: new InkWell(
                                       onTap: () {
-                                        // setState(() {
-                                        //   animationStatus = 1;
-                                        // });
-                                        // _playAnimation();
                                         __handleLogin(context, login.text, password.text);
                                       },
                                       child: new SignIn()),

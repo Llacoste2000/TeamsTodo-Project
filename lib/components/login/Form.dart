@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './InputFields.dart';
+import 'InputFields.dart';
 
 class FormSignIn extends StatelessWidget {
   @override
