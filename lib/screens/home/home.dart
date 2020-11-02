@@ -5,6 +5,7 @@ import 'package:todo/helpers/storage.dart';
 import 'package:todo/register.dart';
 import 'package:todo/screens/login/login.dart';
 import 'package:todo/screens/todo/group.dart';
+import 'package:todo/screens/todo/team.dart';
 import 'package:todo/screens/todo/todo.dart';
 import 'package:todo/screens/user-menu/user-menu.dart';
 import 'package:todo/state/user/user_model.dart';
@@ -16,6 +17,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String groupPage = 'groupList';
+
+  callback(String data) {
+    print('louis je taime');
+    setState(() {
+      groupPage = data;
+    });
+  }
+
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
 
@@ -94,7 +104,7 @@ class _HomeState extends State<Home> {
   List<Widget> _buildScreensLogin() {
     return [
       TodoList(),
-      Group(),
+      groupPage == 'groupList' ? Group(callback) : Team(callback),
       UserMenu(),
     ];
   }

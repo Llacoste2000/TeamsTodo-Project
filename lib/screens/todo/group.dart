@@ -10,6 +10,10 @@ import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
 class Group extends StatefulWidget {
+  Function(String) callback;
+
+  Group(this.callback);
+
   @override
   _GroupState createState() => _GroupState();
 }
@@ -28,14 +32,6 @@ class _GroupState extends State<Group> {
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of(context);
 
-    var _selectedIndex = 1;
-
-    void _onItemTapped(int index) {
-      if (index == 0) {
-        Navigator.pushNamed(context, '/todo');
-      }
-    }
-
     Future<void> _pushAddGroup(name) async {
       String token = await StorageService.readValue('token');
 
@@ -49,6 +45,8 @@ class _GroupState extends State<Group> {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{"name": name}));
+
+      // @TODO add to state to push it ?
     }
 
     void _pushAddGroupScreen() {
@@ -77,7 +75,7 @@ class _GroupState extends State<Group> {
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
               child: Text(
                 'My groups',
                 style: TextStyle(
@@ -89,15 +87,27 @@ class _GroupState extends State<Group> {
             Expanded(
               // @TODO Iterate over a variable...
               child: FutureBuilder<String>(
-                future:
-                    fetchGroups(), // a previously-obtained Future<String> or null
+                future: fetchGroups(),
                 builder:
                     (BuildContext context, AsyncSnapshot<String> snapshot) {
                   List<Widget> children;
                   List<Widget> childs = [];
                   if (snapshot.hasData) {
                     for (var i = 0; i < _groups.length; i++) {
-                      childs.add(new Text(_groups[i].name));
+                      childs.add(new Container(
+                        padding: EdgeInsets.only(left: 80.0, top: 10.0),
+                        child: Row(children: <Widget>[
+                          Expanded(child: Text(_groups[i].name)),
+                          Expanded(
+                              child: FlatButton(
+                            textColor: Color(0xFF6200EE),
+                            onPressed: () {
+                              widget.callback(_groups[i].id);
+                            },
+                            child: Text('See group'),
+                          ))
+                        ]),
+                      ));
                     }
                     children = childs;
                   } else if (snapshot.hasError) {
@@ -108,7 +118,7 @@ class _GroupState extends State<Group> {
                         size: 60,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 16),
+                        padding: const EdgeInsets.all(15.0),
                         child: Text('Error: ${snapshot.error}'),
                       )
                     ];
