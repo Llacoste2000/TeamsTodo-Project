@@ -2,17 +2,26 @@ import 'dart:async';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/components/Form.dart';
-import 'package:todo/components/SignInButton.dart';
-import 'package:todo/components/SignUpLink.dart';
-import 'package:todo/components/WhiteTick.dart';
+import 'package:todo/components/login/Form.dart';
+import 'package:todo/components/login/SignInButton.dart';
+import 'package:todo/components/login/SignUpLink.dart';
+import 'package:todo/components/login/loginLogo.dart';
+import 'package:todo/helpers/flash.dart';
+import 'package:todo/helpers/storage.dart';
 
 import 'loginAnimation.dart';
 import 'styles.dart';
+import 'package:todo/state/user/user_model.dart';
+import 'package:todo/state/user/user_provider.dart';
+
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
@@ -67,11 +76,26 @@ class LoginScreenState extends State<LoginScreen>
         false;
   }
 
+  Future __handleLogin(BuildContext context, login, password) async {
+    try {
+      User user = await loginToApi(context, login, password);
+      await StorageService.writeValue('user', user.toJson().toString());
+      setState(() {
+        animationStatus = 1;
+      });
+      _playAnimation();
+      // Navigator.pushNamed(context, '/todo');
+    } catch (e) {
+      print(e.toString());
+      showTopFlash(context, "Failed", e.toString(), flashError);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     timeDilation = 0.4;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-    final user = Provider.of(context);
+    final UserProvider user = Provider.of(context);
 
     final login = TextEditingController();
     final password = TextEditingController();
@@ -104,7 +128,7 @@ class LoginScreenState extends State<LoginScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               new Tick(image: tick),
-                              new FormSignIn(),
+                              new FormSignIn(login, password),
                               new SignUp()
                             ],
                           ),
@@ -113,10 +137,8 @@ class LoginScreenState extends State<LoginScreen>
                                   padding: const EdgeInsets.only(bottom: 50.0),
                                   child: new InkWell(
                                       onTap: () {
-                                        setState(() {
-                                          animationStatus = 1;
-                                        });
-                                        _playAnimation();
+                                        __handleLogin(
+                                            context, login.text, password.text);
                                       },
                                       child: new SignIn()),
                                 )
@@ -131,60 +153,30 @@ class LoginScreenState extends State<LoginScreen>
   }
 }
 
-// class Login extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Scaffold(
-//         body: Container(
-//             color: Colors.blue,
-//             alignment: Alignment.center,
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: <Widget>[
-//                 Container(
-//                     padding: EdgeInsets.all(10),
-//                     child: TextField(
-//                       decoration: InputDecoration(
-//                         fillColor: Colors.white,
-//                         filled: true,
-//                         border: OutlineInputBorder(),
-//                         labelText: 'Login',
-//                       ),
-//                     )),
-//                 Container(
-//                     padding: EdgeInsets.all(10),
-//                     child: TextField(
-//                       obscureText: true,
-//                       decoration: InputDecoration(
-//                         fillColor: Colors.white,
-//                         filled: true,
-//                         border: OutlineInputBorder(),
-//                         labelText: 'Password',
-//                       ),
-//                     )),
-//                 Container(
-//                     padding: EdgeInsets.all(10),
-//                     child: FlatButton(
-//                       color: Colors.white,
-//                       textColor: Colors.blue,
-//                       disabledColor: Colors.grey,
-//                       disabledTextColor: Colors.black,
-//                       padding: EdgeInsets.all(10.0),
-//                       splashColor: Colors.blueAccent,
-//                       onPressed: () {
-//                         __handleLogin(context);
-//                       },
-//                       child: Text(
-//                         "Login",
-//                         style: TextStyle(fontSize: 20.0),
-//                       ),
-//                     )),
-//               ],
-//             )));
-//   }
-// }
-//
-// void __handleLogin(BuildContext context) {
-//   Navigator.pushNamed(context, '/todo');
-// }
+Future loginToApi(BuildContext context, login, password) async {
+  UserProvider userProvider = Provider.of(context, listen: false);
+
+  if (login == "" || password == "") {
+    throw 'Please enter a valid login and password.';
+  }
+
+  await DotEnv().load('.env');
+
+  var url = DotEnv().env['API_URL'] + '/login_check';
+  var response = await http.post(url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{"email": login, "password": password}));
+
+  if (response.statusCode == 200) {
+    var userData = jsonDecode(response.body);
+
+    User user = User.fromJson(userData);
+    userProvider.setUser(user);
+    return user;
+  } else {
+    var body = jsonDecode(response.body);
+    throw body['message'];
+  }
+}
