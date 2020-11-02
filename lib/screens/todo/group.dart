@@ -14,14 +14,19 @@ class Group extends StatefulWidget {
   _GroupState createState() => _GroupState();
 }
 
+class GroupCard {
+  String name;
+  String id;
+
+  GroupCard(this.id, this.name);
+}
+
 class _GroupState extends State<Group> {
-  var _groups = {};
+  List<GroupCard> _groups = [];
 
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of(context);
-
-    fetchGroups();
 
     var _selectedIndex = 1;
 
@@ -83,7 +88,52 @@ class _GroupState extends State<Group> {
             ),
             Expanded(
               // @TODO Iterate over a variable...
-              child: Column(),
+              child: FutureBuilder<String>(
+                future:
+                    fetchGroups(), // a previously-obtained Future<String> or null
+                builder:
+                    (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  List<Widget> children;
+                  if (snapshot.hasData) {
+                    List<Widget> childs = [];
+                    for (var i = 0; i < _groups.length; i++) {
+                      childs.add(new Text(_groups[i].name));
+                    }
+                    children = childs;
+                  } else if (snapshot.hasError) {
+                    children = <Widget>[
+                      Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 60,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text('Error: ${snapshot.error}'),
+                      )
+                    ];
+                  } else {
+                    children = <Widget>[
+                      SizedBox(
+                        child: CircularProgressIndicator(),
+                        width: 60,
+                        height: 60,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 16),
+                        child: Text('Awaiting result...'),
+                      )
+                    ];
+                  }
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: children,
+                    ),
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -95,7 +145,7 @@ class _GroupState extends State<Group> {
     );
   }
 
-  Future fetchGroups() async {
+  Future<String> fetchGroups() async {
     User user = User.fromJson(await StorageService.readValue('user'));
 
     await DotEnv().load('.env');
@@ -109,7 +159,12 @@ class _GroupState extends State<Group> {
 
     Map<String, dynamic> data = jsonDecode(response.body);
     for (int i = 0; i < data['groups'].length; i++) {
-      _groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
+      //_groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
+
+      GroupCard group =
+          new GroupCard(data['groups'][i]['@id'], data['groups'][i]['name']);
+
+      _groups.add(group);
     }
 
 //    print(_groups);
