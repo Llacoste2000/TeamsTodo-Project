@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/animation.dart';
 import 'package:flutter/foundation.dart';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/components/login/Form.dart';
 import 'package:todo/components/login/SignInButton.dart';
@@ -15,13 +12,11 @@ import 'package:todo/components/login/SignUpLink.dart';
 import 'package:todo/components/login/loginLogo.dart';
 import 'package:todo/helpers/flash.dart';
 import 'package:todo/helpers/storage.dart';
-
-import 'loginAnimation.dart';
-import 'styles.dart';
 import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
 
-import 'package:http/http.dart' as http;
+import 'loginAnimation.dart';
+import 'styles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key key}) : super(key: key);
