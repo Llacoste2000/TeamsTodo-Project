@@ -6,7 +6,7 @@ class SignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return (new Container(
       width: 320.0,
-      height: 60.0,
+      height: 50.0,
       alignment: FractionalOffset.center,
       decoration: new BoxDecoration(
         color: Color.fromRGBO(25, 86, 170, 0.9),
@@ -19,7 +19,7 @@ class SignIn extends StatelessWidget {
           fontSize: 22.0,
           fontWeight: FontWeight.w500,
           fontFamily: 'SourceSansPro',
-          letterSpacing: 0.5,
+          letterSpacing: 1.8,
         ),
       ),
     ));

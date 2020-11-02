@@ -109,7 +109,7 @@ class LoginScreenState extends State<LoginScreen>
                   decoration: new BoxDecoration(
                       gradient: new LinearGradient(
                     colors: <Color>[
-                      const Color.fromRGBO(25, 86, 170, 0.9),
+                      const Color.fromRGBO(25, 86, 170, 0.85),
                       const Color.fromRGBO(85, 169, 244, 0.8),
                     ],
                     stops: [0.2, 1.0],

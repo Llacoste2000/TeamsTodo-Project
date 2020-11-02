@@ -24,8 +24,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
+      body: Container(
           decoration:  new BoxDecoration(
             image: new DecorationImage(
                 image: new AssetImage('assets/images/login.jpg'),
@@ -36,8 +35,8 @@ class _RegisterState extends State<Register> {
               decoration: new BoxDecoration(
                   gradient: new LinearGradient(
                     colors: <Color>[
-                      const Color.fromRGBO(6, 52, 94, 0.8),
-                      const Color.fromRGBO(85, 169, 244, 0.9),
+                      const Color.fromRGBO(25, 86, 170, 0.85),
+                      const Color.fromRGBO(85, 169, 244, 0.8),
                     ],
                     stops: [0.2, 1.0],
                     begin: const FractionalOffset(0.0, 0.0),
@@ -219,20 +218,20 @@ class _RegisterState extends State<Register> {
                                       },
                                       child: new Container(
                                         width: 320.0,
-                                        height: 60.0,
+                                        height: 50.0,
                                         alignment: FractionalOffset.center,
                                         decoration: new BoxDecoration(
-                                          color: const Color.fromRGBO(12, 86, 141, 1.0),
+                                          color: Color.fromRGBO(25, 86, 170, 0.9),
                                           borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
                                         ),
                                         child: new Text(
-                                          "Register",
+                                          "Create an account",
                                           style: new TextStyle(
                                             color: Colors.white,
                                             fontSize: 22.0,
                                             fontWeight: FontWeight.w500,
                                             fontFamily: 'SourceSansPro',
-                                            letterSpacing: 0.5,
+                                            letterSpacing: 1.8,
                                           ),
                                         ),
                                       )),
@@ -247,7 +246,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ],
               ))),
-        ));
+        );
   }
 
 //  Mettre fonctions en async et throw err
