@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/register.dart';
 
 class SignUp extends StatelessWidget {
   SignUp();
@@ -8,7 +9,9 @@ class SignUp extends StatelessWidget {
       padding: const EdgeInsets.only(
         top: 160.0,
       ),
-      onPressed: null,
+      onPressed: ()  {
+        Navigator.pushNamed(context, '/register');
+      },
       child: new Text(
         "Don't have an account? Sign Up",
         textAlign: TextAlign.center,
@@ -23,3 +26,4 @@ class SignUp extends StatelessWidget {
     ));
   }
 }
+

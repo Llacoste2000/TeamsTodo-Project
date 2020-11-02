@@ -82,8 +82,8 @@ class LoginScreenState extends State<LoginScreen>
       setState(() {
         animationStatus = 1;
       });
-      userProvider.setUser(user);
       _playAnimation();
+      userProvider.setUser(user);
     } catch (e) {
       print(e.toString());
       showTopFlash(context, "Failed", e.toString(), flashError);
@@ -128,7 +128,10 @@ class LoginScreenState extends State<LoginScreen>
                             children: <Widget>[
                               new Tick(image: tick),
                               new FormSignIn(login, password),
-                              new SignUp()
+                              SizedBox(
+                                height: 150.0,
+                              )
+                              // new SignUp() TODO: Commenté car le Navigator.pushNamed surle onPressed du bouton ne fonctionne pas
                             ],
                           ),
                           animationStatus == 0
