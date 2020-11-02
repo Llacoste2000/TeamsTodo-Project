@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/helpers/storage.dart';
+import 'package:todo/helpers/storage.dart';
 import 'package:todo/state/user/user_provider.dart';
 
 class TodoList extends StatefulWidget {
@@ -12,6 +14,7 @@ class TodoListState extends State<TodoList> {
 
   @override
   Widget build(BuildContext context) {
+    StorageService.deleteAll();
     UserProvider userProvider = Provider.of(context);
     return new Scaffold(
       appBar: AppBar(

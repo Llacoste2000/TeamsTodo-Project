@@ -33,7 +33,7 @@ class Login extends StatelessWidget {
                         fillColor: Colors.white,
                         filled: true,
                         border: OutlineInputBorder(),
-                        labelText: 'Login',
+                          labelText: 'Login',
                       ),
                     )),
                 Container(
@@ -47,7 +47,8 @@ class Login extends StatelessWidget {
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                       ),
-                    )),
+                    )
+                ),
                 Container(
                     padding: EdgeInsets.all(10),
                     child: FlatButton(
