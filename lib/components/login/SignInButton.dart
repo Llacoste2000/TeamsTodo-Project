@@ -9,7 +9,7 @@ class SignIn extends StatelessWidget {
       height: 60.0,
       alignment: FractionalOffset.center,
       decoration: new BoxDecoration(
-        color: const Color.fromRGBO(12, 86, 141, 1.0),
+        color: Color.fromRGBO(25, 86, 170, 0.9),
         borderRadius: new BorderRadius.all(const Radius.circular(30.0)),
       ),
       child: new Text(
