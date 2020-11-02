@@ -23,13 +23,40 @@ class TodoListState extends State<TodoList> {
     GlobalProvider userProvider = Provider.of(context);
     return new Scaffold(
       appBar: AppBar(
-        title: const Text('TodoList APP'),
+        backgroundColor: Color.fromRGBO(25, 86, 170, 1.0),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          Image.asset(
+          'assets/images/app-logo.png',
+          fit: BoxFit.contain,
+          height: 42,
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0), child: Text(
+            'TeamsToDo',
+            style: TextStyle(
+              fontSize: 23.0,
+              fontFamily: 'Pacifico',
+              fontWeight: FontWeight.w600,
+              letterSpacing: 2.0
+            ),
+          ))
+          ],
+        )
       ),
-      body: _buildTodoList(),
-      floatingActionButton: new FloatingActionButton(
+        body: _buildTodoList(),
+        backgroundColor: Colors.grey[50],
+        floatingActionButton: new FloatingActionButton(
+          backgroundColor: Color.fromRGBO(25, 86, 170, 1.0),
+          focusColor: Color.fromRGBO(25, 86, 170, 0.9),
+          hoverColor: Color.fromRGBO(25, 86, 170, 0.8),
           onPressed: _pushAddTodoScreen,
           tooltip: 'Add task',
-          child: new Icon(Icons.add)),
+          child: new Icon(
+            Icons.add,
+            size: 35.0,
+          )),
     );
   }
 
@@ -76,8 +103,37 @@ class TodoListState extends State<TodoList> {
   }
 
   Widget _buildTodoItem(String todoText, int index) {
-    return new ListTile(
-        title: new Text(todoText), onTap: () => _promptRemoveTodoItem(index));
+    return new Center(
+          child: Card(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.pending_actions_outlined, size: 40.0,),
+                  title: Text(todoText),
+                  subtitle: Text('Assigné à'),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    TextButton(
+                      child: const Text('DELETE'),
+                      onPressed: () {/* ... */},
+                    ),
+                    SizedBox(width: 8),
+                    TextButton(
+                      child: const Text('MARK AS DONE'),
+                      onPressed: () {
+                        _promptRemoveTodoItem(index);
+                      },
+                    ),
+                    SizedBox(width: 8),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
   }
 
   void _pushAddTodoScreen() {
