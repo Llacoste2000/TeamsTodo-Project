@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
           ? _navBarsItemsLogout()
           : _navBarsItemsLogin(),
       confineInSafeArea: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromRGBO(25, 86, 170, 1.0),
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset: true,
       // This needs to be true if you want to move up the screen when keyboard appears.
@@ -80,7 +80,6 @@ class _HomeState extends State<Home> {
       hideNavigationBarWhenKeyboardShows: true,
       // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
         colorBehindNavBar: Colors.white,
       ),
       popAllScreensOnTapOfSelectedTab: true,
@@ -96,7 +95,7 @@ class _HomeState extends State<Home> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style9,
+      navBarStyle: NavBarStyle.style3,
     );
   }
 
@@ -120,20 +119,20 @@ class _HomeState extends State<Home> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.format_list_bulleted_rounded),
         title: ("My ToDos"),
-        activeColor: Colors.indigo[600],
-        inactiveColor: Colors.blueGrey[600],
+        activeColor: Colors.white,
+        inactiveColor: Colors.blue[200]
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.group_rounded),
         title: ("My Groups"),
-        activeColor: Colors.amber[600],
-        inactiveColor: Colors.blueGrey[600],
+        activeColor: Colors.white,
+        inactiveColor: Colors.blue[200]
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.face_rounded),
         title: ("My Account"),
-        activeColor: Colors.brown[600],
-        inactiveColor: Colors.blueGrey[600],
+        activeColor: Colors.white,
+        inactiveColor: Colors.blue[200]
       ),
     ];
   }
@@ -143,14 +142,14 @@ class _HomeState extends State<Home> {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.login_rounded),
         title: ("Login"),
-        activeColor: Colors.cyan[600],
-        inactiveColor: Colors.blueGrey[600],
+        activeColor: Colors.white,
+        inactiveColor: Colors.blue[200]
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.person_add_rounded),
         title: ("Register"),
-        activeColor: Colors.lime[600],
-        inactiveColor: Colors.blueGrey[600],
+        activeColor: Colors.white,
+        inactiveColor: Colors.blue[200]
       ),
     ];
   }
