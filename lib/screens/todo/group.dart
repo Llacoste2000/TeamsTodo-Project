@@ -35,7 +35,8 @@ class _GroupState extends State<Group> {
     GlobalProvider userProvider = Provider.of(context);
 
     Future<void> _pushAddGroup(name) async {
-      String token = await StorageService.readValue('token');
+      String user = await StorageService.readValue('user');
+      userProvider.setUser(User.fromJson(user));
 
       await DotEnv().load('.env');
 
@@ -43,7 +44,7 @@ class _GroupState extends State<Group> {
 
       var response = await http.post(url,
           headers: <String, String>{
-            HttpHeaders.authorizationHeader: 'Bearer ' + token,
+            HttpHeaders.authorizationHeader: 'Bearer ' + userProvider.userToken,
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{"name": name}));
