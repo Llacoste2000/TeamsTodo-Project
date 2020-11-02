@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:todo/routes/routes.dart';
 import 'package:todo/state/user/user_provider.dart';
 
-
 void main() => runApp(
       ChangeNotifierProvider(
         create: (context) => GlobalProvider(),
@@ -18,11 +17,7 @@ class TodoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       initialRoute: '/',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(appTitle),
-        ),
-      ),
+      routes: routes,
     );
   }
 }

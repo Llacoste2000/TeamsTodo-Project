@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/helpers/storage.dart';
-import 'file:///D:/Users/Bourbon/Documents/Ynov_B3_Info/dev-mobile/android-studio-projects/TeamsTodo-Project/lib/screens/register/register.dart';
 import 'package:todo/screens/login/login.dart';
+import 'package:todo/screens/register/register.dart';
 import 'package:todo/screens/todo/group.dart';
 import 'package:todo/screens/todo/team.dart';
 import 'package:todo/screens/todo/todo.dart';
@@ -117,40 +117,35 @@ class _HomeState extends State<Home> {
   List<PersistentBottomNavBarItem> _navBarsItemsLogin() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.format_list_bulleted_rounded),
-        title: ("My ToDos"),
-        activeColor: Colors.white,
-        inactiveColor: Colors.blue[200]
-      ),
+          icon: Icon(Icons.format_list_bulleted_rounded),
+          title: ("My ToDos"),
+          activeColor: Colors.white,
+          inactiveColor: Colors.blue[200]),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.group_rounded),
-        title: ("My Groups"),
-        activeColor: Colors.white,
-        inactiveColor: Colors.blue[200]
-      ),
+          icon: Icon(Icons.group_rounded),
+          title: ("My Groups"),
+          activeColor: Colors.white,
+          inactiveColor: Colors.blue[200]),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.face_rounded),
-        title: ("My Account"),
-        activeColor: Colors.white,
-        inactiveColor: Colors.blue[200]
-      ),
+          icon: Icon(Icons.face_rounded),
+          title: ("My Account"),
+          activeColor: Colors.white,
+          inactiveColor: Colors.blue[200]),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItemsLogout() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.login_rounded),
-        title: ("Login"),
-        activeColor: Colors.white,
-        inactiveColor: Colors.blue[200]
-      ),
+          icon: Icon(Icons.login_rounded),
+          title: ("Login"),
+          activeColor: Colors.white,
+          inactiveColor: Colors.blue[200]),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.person_add_rounded),
-        title: ("Register"),
-        activeColor: Colors.white,
-        inactiveColor: Colors.blue[200]
-      ),
+          icon: Icon(Icons.person_add_rounded),
+          title: ("Register"),
+          activeColor: Colors.white,
+          inactiveColor: Colors.blue[200]),
     ];
   }
 }
