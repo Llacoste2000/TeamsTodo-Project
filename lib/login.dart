@@ -71,18 +71,17 @@ class Login extends StatelessWidget {
 }
 
 Future __handleLogin(BuildContext context, login, password) async {
+  UserProvider userProvider = Provider.of(context, listen: false);
   try {
     User user = await loginToApi(context, login, password);
-    StorageService.writeValue('user', user.toJson());
-    Navigator.pushNamed(context, '/todo');
+    await StorageService.writeValue('user', user.toJson());
+    userProvider.setUser(user);
   } catch (e) {
     showTopFlash(context, "Failed", e.toString(), flashError);
   }
 }
 
 Future loginToApi(BuildContext context, login, password) async {
-  UserProvider userProvider = Provider.of(context, listen: false);
-
   if (login == "" || password == "") {
     throw 'Please enter a valid login and password.';
   }
@@ -98,8 +97,6 @@ Future loginToApi(BuildContext context, login, password) async {
 
   if (response.statusCode == 200) {
     User user = User.fromJsonResponse(response.body);
-
-    userProvider.setUser(user);
     return user;
   } else {
     var body = jsonDecode(response.body);

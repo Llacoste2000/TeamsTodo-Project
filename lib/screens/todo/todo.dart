@@ -24,36 +24,12 @@ class TodoListState extends State<TodoList> {
     return new Scaffold(
       appBar: AppBar(
         title: const Text('TodoList APP'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.person),
-            tooltip: 'Connexion',
-            onPressed: () {
-              Navigator.pushNamed(context, '/usermenu');
-            },
-          ),
-        ],
       ),
       body: _buildTodoList(),
       floatingActionButton: new FloatingActionButton(
           onPressed: _pushAddTodoScreen,
           tooltip: 'Add task',
           child: new Icon(Icons.add)),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Personal List',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groups',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue[800],
-        onTap: _onItemTapped,
-      ),
     );
   }
 

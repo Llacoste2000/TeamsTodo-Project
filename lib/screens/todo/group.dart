@@ -44,8 +44,6 @@ class _GroupState extends State<Group> {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{"name": name}));
-
-      print(response.body);
     }
 
     void _pushAddGroupScreen() {
@@ -69,13 +67,6 @@ class _GroupState extends State<Group> {
     return new Scaffold(
       appBar: AppBar(
         title: const Text('TodoList APP - Groups'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.person),
-            tooltip: 'Connexion',
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Center(
         child: Column(
@@ -101,21 +92,6 @@ class _GroupState extends State<Group> {
           onPressed: _pushAddGroupScreen,
           tooltip: 'Add group',
           child: new Icon(Icons.add)),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Personal List',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groups',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue[800],
-        onTap: _onItemTapped,
-      ),
     );
   }
 
@@ -136,6 +112,6 @@ class _GroupState extends State<Group> {
       _groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
     }
 
-    print(_groups);
+//    print(_groups);
   }
 }

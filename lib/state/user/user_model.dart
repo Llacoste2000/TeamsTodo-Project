@@ -13,7 +13,6 @@ class User {
    * Use when getting user from StorageService
    */
   factory User.fromJsonResponse(String json) {
-    print(json);
     return new User(
         id: jsonDecode(json)['data']['id'],
         firstName: jsonDecode(json)['data']['firstName'],
@@ -26,7 +25,6 @@ class User {
    * Use when getting an user from the api.
    */
   factory User.fromJson(String json) {
-    print(json);
     return new User(
         id: jsonDecode(json)['id'],
         firstName: jsonDecode(json)['firstName'],

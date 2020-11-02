@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/helpers/storage.dart';
+import 'package:todo/state/user/user_provider.dart';
 
 class UserMenu extends StatefulWidget {
   @override
@@ -14,9 +16,15 @@ class _UserMenuState extends State<UserMenu> {
         title: const Text('User Menu'),
       ),
       body: RawMaterialButton(
-        onPressed: () {
-          StorageService.deleteAll();
-          Navigator.pushReplacementNamed(context, '/login');
+        onPressed: () async {
+          try {
+            UserProvider userProvider = Provider.of(context, listen: false);
+            await StorageService.deleteAll();
+            userProvider.deleteUser();
+          } catch (e) {
+            print(e.toString());
+          }
+//          Navigator.pushReplacementNamed(context, '/login');
         },
         child: Text(
           'Se deconnecter',
