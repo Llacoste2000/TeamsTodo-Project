@@ -34,15 +34,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _checkLogin(context);
-//    new Future.delayed(new Duration(seconds: 5), () {
-//      if (user == "" || user == null) {
-//        _checkLogin(context).then((value) {
-//          setState(() {
-//            user = value;
-//          });
-//        });
-//      }
-//    });
   }
 
   Future _checkLogin(BuildContext context) async {
