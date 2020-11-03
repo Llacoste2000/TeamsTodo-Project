@@ -35,6 +35,15 @@ class TodoListState extends State<TodoList> {
     return new Scaffold(
       appBar: AppBar(
           backgroundColor: Color.fromRGBO(25, 86, 170, 1.0),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.close_rounded),
+              tooltip: 'Close team page',
+              onPressed: () {
+                widget.callback('groupList');
+              },
+            )
+          ],
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

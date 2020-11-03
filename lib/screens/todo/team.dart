@@ -77,15 +77,15 @@ class _TeamState extends State<Team> {
                 height: 42,
               ),
               Container(
-                  padding: const EdgeInsets.all(8.0), child: Text(
-                'TeamsToDo',
-                style: TextStyle(
-                    fontSize: 23.0,
-                    fontFamily: 'Pacifico',
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 2.0
-                ),
-              ))
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'TeamsToDo',
+                    style: TextStyle(
+                        fontSize: 23.0,
+                        fontFamily: 'Pacifico',
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 2.0),
+                  ))
             ],
           ),
           actions: <Widget>[
@@ -96,13 +96,14 @@ class _TeamState extends State<Team> {
               onPressed: () {
                 widget.callback('groupList');
               },
-        )
-      ]),
+            )
+          ]),
       body: Center(
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
+              padding: EdgeInsets.only(
+                  left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
               child: Text(
                 'My Teams',
                 style: TextStyle(
@@ -124,13 +125,18 @@ class _TeamState extends State<Team> {
                         child: Card(
                           color: Colors.white,
                           borderOnForeground: true,
-                          shape: Border(left: BorderSide(color: Color.fromRGBO(25, 86, 170, 1.0), width: 10)),
+                          shape: Border(
+                              left: BorderSide(
+                                  color: Color.fromRGBO(25, 86, 170, 1.0),
+                                  width: 10)),
                           elevation: 4.0,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ListTile(
-                                leading: Icon(Icons.group_outlined, size: 40.0, color: Color.fromRGBO(25, 86, 170, 1.0)),
+                                leading: Icon(Icons.group_outlined,
+                                    size: 40.0,
+                                    color: Color.fromRGBO(25, 86, 170, 1.0)),
                                 title: Text(
                                   'Team : ' + _teams[i].name,
                                   style: TextStyle(
@@ -138,8 +144,8 @@ class _TeamState extends State<Team> {
                                       fontFamily: 'SourceSansPro',
                                       fontSize: 17.0,
                                       color: Color.fromRGBO(25, 86, 170, 1.0),
-                                      fontWeight: FontWeight.w600
-                                  ) ,),
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -151,14 +157,13 @@ class _TeamState extends State<Team> {
                                       style: new TextStyle(
                                           color: Colors.blue[300],
                                           fontWeight: FontWeight.w800,
-                                          fontSize: 18.0
-                                      ),
+                                          fontSize: 18.0),
                                     ),
                                     onPressed: () {
                                       setState(() {
                                         // @TODO Modify this to go to the todolists of the team
-                                        //widget.callback('team');
-                                        //provider.setGroupId(_teams[i].id);
+                                        widget.callback('todoList');
+                                        provider.setTeamId(_teams[i].id);
                                       });
                                     },
                                   ),

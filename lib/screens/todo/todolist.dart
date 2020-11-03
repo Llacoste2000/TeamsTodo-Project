@@ -39,6 +39,7 @@ class _ListTodoListState extends State<ListTodoList> {
 
   @override
   Widget build(BuildContext context) {
+    GlobalProvider provider = Provider.of(context, listen: false);
     return new Scaffold(
       appBar: AppBar(title: const Text('TodoList APP'), actions: <Widget>[
         IconButton(
@@ -70,6 +71,7 @@ class _ListTodoListState extends State<ListTodoList> {
                           for (int i = 0; i < _lists.length; i++)
                             TodoListCard(_lists[i], () {
                               _lists.removeAt(i);
+                              provider.setTodolistId(_lists[i].id);
                             }),
                         ],
                       )
@@ -175,7 +177,6 @@ class _ListTodoListState extends State<ListTodoList> {
 
       Map<String, dynamic> dataTeam = jsonDecode(response.body);
 
-
       for (int i = 0; i < dataTeam['todolists'].length; i++) {
         String id =
             dataTeam['todolists'][i].toString().split('/').last.toString();
@@ -207,6 +208,7 @@ class _ListTodoListState extends State<ListTodoList> {
   }
 
   Widget TodoListCard(TodoListModel todolist, Function callback) {
+    GlobalProvider provider = Provider.of(context, listen: false);
     return new Container(
       padding: EdgeInsets.only(left: 80.0, top: 10.0),
       child: Row(children: <Widget>[
