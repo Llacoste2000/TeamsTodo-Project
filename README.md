@@ -51,7 +51,7 @@ Lorsque vous lancez l'application, vous arrivez sur un écran d'authentification
 Une fois connecté / inscrit, vous arrivez sur vos todolist personnelles que vous pourrez créer directement avec le petit bouton + en bas à droite de votre écran.
 
 <p align="center">
-  <img width="370" height="740" src="./doc/dashboard.png">
+  <img width="370" height="740" src="./doc/dashboard-ptodos.png">
   <img width="370" height="740" src="./doc/add.png">
 </p>
 
