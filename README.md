@@ -56,7 +56,7 @@ Une fois connecté / inscrit, vous arrivez sur vos todolist personnelles que vou
 </p>
 
 
-Vous disposez d'une barre de navigation en bas de l'écran pour naviguer entre les différents écrans de l'application.
+Vous disposez d'une barre de navigation en bas de l'écran pour naviguer entre les différents écrans de l'application qui fonctionnent de la même façon que l'écran des todos.
 <p align="center">
   <img src="./doc/navbar.png">
 </p>
