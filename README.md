@@ -50,12 +50,14 @@ Lorsque vous lancez l'application, vous arrivez sur un écran d'authentification
 
 Une fois connecté / inscrit, vous arrivez sur vos todolist personnelles que vous pourrez créer directement avec le petit bouton + en bas à droite de votre écran.
 
-![Todolists personnelles](./doc/dashboard.png "Dashboard - Todolists personnelles")
-
-
-![Todolists personnelles](./doc/add.png "Dashboard - Ajouter une Todolist personnelle")
+<p align="center">
+  <img width="370" height="740" src="./doc/dashboard.png">
+  <img width="370" height="740" src="./doc/add.png">
+</p>
 
 
 Vous disposez d'une barre de navigation en bas de l'écran pour naviguer entre les différents écrans de l'application.
+<p align="center">
+  <img src="./doc/navbar.png">
+</p>
 
-![Barre de navigation](./doc/navbar.png "Dashboard - Barre de navigation")
