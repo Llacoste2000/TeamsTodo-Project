@@ -66,22 +66,45 @@ class _TeamState extends State<Team> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('TodoList APP - Team'), actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.close_rounded),
-          tooltip: 'Close team page',
-          onPressed: () {
-            widget.callback('groupList');
-          },
+      appBar: AppBar(
+          backgroundColor: Color.fromRGBO(25, 86, 170, 1.0),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Image.asset(
+                'assets/images/app-logo.png',
+                fit: BoxFit.contain,
+                height: 42,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0), child: Text(
+                'TeamsToDo',
+                style: TextStyle(
+                    fontSize: 23.0,
+                    fontFamily: 'Pacifico',
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 2.0
+                ),
+              ))
+            ],
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.close_rounded),
+              tooltip: 'Close team page',
+              iconSize: 35.0,
+              onPressed: () {
+                widget.callback('groupList');
+              },
         )
       ]),
       body: Center(
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
+              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
               child: Text(
-                'My teams',
+                'My Teams',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
@@ -98,21 +121,54 @@ class _TeamState extends State<Team> {
                   List<Widget> childs = [];
                   if (snapshot.hasData) {
                     for (var i = 0; i < _teams.length; i++) {
-                      childs.add(new Container(
-                        padding: EdgeInsets.only(left: 80.0, top: 10.0),
-                        child: Row(children: <Widget>[
-                          Expanded(child: Text(_teams[i].name)),
-                          Expanded(
-                              child: FlatButton(
-                            textColor: Color(0xFF6200EE),
-                            onPressed: () {
-                              // @TODO Modify this to go to the todolists of the team
-                              //widget.callback('team');
-                              //provider.setGroupId(_teams[i].id);
-                            },
-                            child: Text('See team'),
-                          ))
-                        ]),
+                      childs.add(Center(
+                        child: Card(
+                          color: Colors.white,
+                          borderOnForeground: true,
+                          shape: Border(left: BorderSide(color: Color.fromRGBO(25, 86, 170, 1.0), width: 10)),
+                          elevation: 4.0,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ListTile(
+                                leading: Icon(Icons.group_outlined, size: 40.0, color: Color.fromRGBO(25, 86, 170, 1.0)),
+                                title: Text(
+                                  'Team : ' + _teams[i].name,
+                                  style: TextStyle(
+                                      letterSpacing: 1.0,
+                                      fontFamily: 'SourceSansPro',
+                                      fontSize: 17.0,
+                                      color: Color.fromRGBO(25, 86, 170, 1.0),
+                                      fontWeight: FontWeight.w600
+                                  ) ,),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  SizedBox(width: 8),
+                                  TextButton(
+                                    child: Text(
+                                      'SHOW TEAM',
+                                      style: new TextStyle(
+                                          color: Colors.blue[300],
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 18.0
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        // @TODO Modify this to go to the todolists of the team
+                                        //widget.callback('team');
+                                        //provider.setGroupId(_teams[i].id);
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(width: 8),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ));
                     }
                     children = childs;
