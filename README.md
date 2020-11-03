@@ -43,9 +43,10 @@ L'application étant encore à l'état de prototype, elle n'est pas encore dispo
 
 Lorsque vous lancez l'application, vous arrivez sur un écran d'authentification avec pour choix la connexion ainsi que l'inscription.
 
-![Interface de connexion](./doc/login.png "Connexion")
-
-![Interface d'inscription](./doc/register.png "Inscription")
+<p align="center">
+  <img width="370" height="740" src="./doc/login.png">
+  <img width="370" height="740" src="./doc/register.png">
+</p>
 
 Une fois connecté / inscrit, vous arrivez sur vos todolist personnelles que vous pourrez créer directement avec le petit bouton + en bas à droite de votre écran.
 
