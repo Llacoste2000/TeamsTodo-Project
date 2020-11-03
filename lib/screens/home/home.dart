@@ -7,6 +7,7 @@ import 'package:todo/screens/register/register.dart';
 import 'package:todo/screens/todo/group.dart';
 import 'package:todo/screens/todo/team.dart';
 import 'package:todo/screens/todo/todo.dart';
+import 'package:todo/screens/todo/todolist.dart';
 import 'package:todo/screens/user-menu/user-menu.dart';
 import 'package:todo/state/user/user_model.dart';
 import 'package:todo/state/user/user_provider.dart';
@@ -20,6 +21,7 @@ class _HomeState extends State<Home> {
   String groupPage = 'groupList';
 
   callback(String data) {
+    print(data);
     setState(() {
       groupPage = data;
     });
@@ -32,15 +34,6 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _checkLogin(context);
-//    new Future.delayed(new Duration(seconds: 5), () {
-//      if (user == "" || user == null) {
-//        _checkLogin(context).then((value) {
-//          setState(() {
-//            user = value;
-//          });
-//        });
-//      }
-//    });
   }
 
   Future _checkLogin(BuildContext context) async {
@@ -100,9 +93,20 @@ class _HomeState extends State<Home> {
   }
 
   List<Widget> _buildScreensLogin() {
+    GlobalProvider provider = Provider.of(context);
     return [
       TodoList(),
-      groupPage == 'groupList' ? Group(callback) : Team(callback),
+      groupPage == 'groupList'
+          ? Group(callback)
+          : groupPage == 'teamList'
+              ? Team(callback)
+              : groupPage == 'todoList'
+                  ? ListTodoList(callback)
+                  : TodoList(
+                      id: provider.todolistsId,
+                      isPersonnal: false,
+                      callback: callback,
+                    ),
       UserMenu(),
     ];
   }

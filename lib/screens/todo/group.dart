@@ -48,8 +48,6 @@ class _GroupState extends State<Group> {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{"name": name}));
-
-      // @TODO add to state to push it ?
     }
 
     void _pushAddGroupScreen() {
@@ -84,23 +82,23 @@ class _GroupState extends State<Group> {
                 height: 42,
               ),
               Container(
-                  padding: const EdgeInsets.all(8.0), child: Text(
-                'TeamsToDo',
-                style: TextStyle(
-                    fontSize: 23.0,
-                    fontFamily: 'Pacifico',
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 2.0
-                ),
-              ))
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'TeamsToDo',
+                    style: TextStyle(
+                        fontSize: 23.0,
+                        fontFamily: 'Pacifico',
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 2.0),
+                  ))
             ],
-          )
-      ),
+          )),
       body: Center(
         child: Column(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
+              padding: EdgeInsets.only(
+                  left: 16.0, right: 16.0, top: 20.0, bottom: 20.0),
               child: Text(
                 'My Groups',
                 style: TextStyle(
@@ -110,7 +108,6 @@ class _GroupState extends State<Group> {
               ),
             ),
             Expanded(
-              // @TODO Iterate over a variable...
               child: FutureBuilder<String>(
                 future: fetchGroups(),
                 builder:
@@ -123,22 +120,27 @@ class _GroupState extends State<Group> {
                         child: Card(
                           color: Colors.white,
                           borderOnForeground: true,
-                          shape: Border(left: BorderSide(color: Color.fromRGBO(25, 86, 170, 1.0), width: 10)),
+                          shape: Border(
+                              left: BorderSide(
+                                  color: Color.fromRGBO(25, 86, 170, 1.0),
+                                  width: 10)),
                           elevation: 4.0,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               ListTile(
-                                leading: Icon(Icons.group, size: 40.0, color: Color.fromRGBO(25, 86, 170, 1.0)),
+                                leading: Icon(Icons.group,
+                                    size: 40.0,
+                                    color: Color.fromRGBO(25, 86, 170, 1.0)),
                                 title: Text(
-                                  'Group : '+ _groups[i].name,
+                                  'Group : ' + _groups[i].name,
                                   style: TextStyle(
                                       letterSpacing: 1.0,
                                       fontFamily: 'SourceSansPro',
                                       fontSize: 17.0,
                                       color: Color.fromRGBO(25, 86, 170, 1.0),
-                                      fontWeight: FontWeight.w600
-                                  ) ,),
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -150,12 +152,11 @@ class _GroupState extends State<Group> {
                                       style: new TextStyle(
                                           color: Colors.blue[300],
                                           fontWeight: FontWeight.w800,
-                                          fontSize: 18.0
-                                      ),
+                                          fontSize: 18.0),
                                     ),
                                     onPressed: () {
                                       setState(() {
-                                        widget.callback('team');
+                                        widget.callback('teamList');
                                         provider.setGroupId(_groups[i].id);
                                       });
                                     },
@@ -213,11 +214,15 @@ class _GroupState extends State<Group> {
           hoverColor: Color.fromRGBO(25, 86, 170, 0.8),
           onPressed: _pushAddGroupScreen,
           tooltip: 'Add group',
-          child: new Icon(Icons.add, size: 35.0,)),
+          child: new Icon(
+            Icons.add,
+            size: 35.0,
+          )),
     );
   }
 
   Future<String> fetchGroups() async {
+    List<GroupCard> groups = [];
     User user = User.fromJson(await StorageService.readValue('user'));
 
     await DotEnv().load('.env');
@@ -231,13 +236,14 @@ class _GroupState extends State<Group> {
 
     Map<String, dynamic> data = jsonDecode(response.body);
     for (int i = 0; i < data['groups'].length; i++) {
-
       GroupCard group = new GroupCard(
           data['groups'][i]['@id'].toString().split('/').last.toString(),
           data['groups'][i]['name']);
 
-      _groups.add(group);
+      groups.add(group);
     }
+
+    _groups = groups;
 
     return response.body;
   }
