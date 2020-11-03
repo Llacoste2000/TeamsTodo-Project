@@ -110,7 +110,6 @@ class _GroupState extends State<Group> {
               ),
             ),
             Expanded(
-              // @TODO Iterate over a variable...
               child: FutureBuilder<String>(
                 future: fetchGroups(),
                 builder:
@@ -218,6 +217,7 @@ class _GroupState extends State<Group> {
   }
 
   Future<String> fetchGroups() async {
+    List<GroupCard> groups = [];
     User user = User.fromJson(await StorageService.readValue('user'));
 
     await DotEnv().load('.env');
@@ -236,8 +236,10 @@ class _GroupState extends State<Group> {
           data['groups'][i]['@id'].toString().split('/').last.toString(),
           data['groups'][i]['name']);
 
-      _groups.add(group);
+      groups.add(group);
     }
+
+    _groups = groups;
 
     return response.body;
   }

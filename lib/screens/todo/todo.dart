@@ -10,10 +10,11 @@ import 'package:todo/state/user/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class TodoList extends StatefulWidget {
-  bool isPersonnal;
+  bool isPersonnal = true;
   String id;
+  Function callback;
 
-  TodoList({this.id, this.isPersonnal = true});
+  TodoList({this.id, this.isPersonnal, this.callback});
 
   @override
   createState() => new TodoListState();
@@ -25,7 +26,6 @@ class TodoListState extends State<TodoList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     widget.isPersonnal ? fetchPersonnalTodos() : fetchTodos();
   }
@@ -73,13 +73,13 @@ class TodoListState extends State<TodoList> {
               child: Center(
                 child: isLoaded
                     ? Column(
-                  children: [
-                    for (int i = 0; i < _todos.length; i++)
-                      TodoCard(_todos[i], () {
-                        _todos.removeAt(i);
-                      }),
-                  ],
-                )
+                        children: [
+                          for (int i = 0; i < _todos.length; i++)
+                            TodoCard(_todos[i], () {
+                              _todos.removeAt(i);
+                            }),
+                        ],
+                      )
                     : Text('Loading...'),
               ),
             ),
@@ -106,11 +106,6 @@ class TodoListState extends State<TodoList> {
         ));
       });
       index = _todos.length - 1;
-
-      print('------1------');
-      print(_todos[index].id);
-      print(_todos[index].name);
-      print(_todos[index].isCompleted);
 
       User user = User.fromJson(await StorageService.readValue('user'));
 
@@ -148,10 +143,6 @@ class TodoListState extends State<TodoList> {
           isCompleted: false,
         );
       });
-      print('------2------');
-      print(_todos[index].id);
-      print(_todos[index].name);
-      print(_todos[index].isCompleted);
     } catch (e) {
       showTopFlash(context, "Error", "Could not create a Todo", flashError);
       print(e.toString());
@@ -178,7 +169,6 @@ class TodoListState extends State<TodoList> {
 
   Future deletePersonnalTodo(String id) async {
     List<Todo> todos = [];
-    print('oui');
     try {
       User user = User.fromJson(await StorageService.readValue('user'));
       await DotEnv().load('.env');
@@ -188,8 +178,6 @@ class TodoListState extends State<TodoList> {
         HttpHeaders.authorizationHeader: 'Bearer ' + user.token,
         'Content-Type': 'application/json; charset=UTF-8',
       });
-
-      print('deleted');
     } catch (e) {
       showTopFlash(context, "Error", "Could not delete Todo", flashError);
       print(e.toString());
@@ -198,7 +186,6 @@ class TodoListState extends State<TodoList> {
 
   Future<String> fetchPersonnalTodos() async {
     List<Todo> todos = [];
-    print('oui');
     try {
       User user = User.fromJson(await StorageService.readValue('user'));
 
@@ -240,13 +227,11 @@ class TodoListState extends State<TodoList> {
 
   Future<String> fetchTodos() async {
     List<Todo> todos = [];
-    print('oui');
     try {
-      User user = User.fromJson(await StorageService.readValue('user'));
-
       await DotEnv().load('.env');
 
-      String url = DotEnv().env['API_URL'] + "/users/${user.id}";
+      String url = DotEnv().env['API_URL'] + "/todolists/" + widget.id;
+      User user = User.fromJson(await StorageService.readValue('user'));
 
       var response = await http.get(url, headers: <String, String>{
         HttpHeaders.authorizationHeader: 'Bearer ' + user.token,
@@ -254,19 +239,13 @@ class TodoListState extends State<TodoList> {
       });
 
       Map<String, dynamic> data = jsonDecode(response.body);
-      String ptodolistId = data['ptodolists'][0]['id'].toString();
-
-      url = DotEnv().env['API_URL'] + "/personal_todolists/$ptodolistId";
-      response = await http.get(url, headers: <String, String>{
-        HttpHeaders.authorizationHeader: 'Bearer ' + user.token,
-        'Content-Type': 'application/json; charset=UTF-8',
-      });
       data = jsonDecode(response.body);
-      for (int i = 0; i < data['ptodos'].length; i++) {
+
+      for (int i = 0; i < data['todos'].length; i++) {
         Todo todo = new Todo(
-          id: data['ptodos'][i]['id'].toString(),
-          name: data['ptodos'][i]['name'],
-          isCompleted: data['ptodos'][i]['isCompleted'],
+          id: data['todos'][i]['id'].toString(),
+          name: data['todos'][i]['name'],
+          isCompleted: data['todos'][i]['isCompleted'],
         );
 
         todos.add(todo);

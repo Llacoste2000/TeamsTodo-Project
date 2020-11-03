@@ -112,7 +112,6 @@ class _TeamState extends State<Team> {
               ),
             ),
             Expanded(
-              // @TODO Iterate over a variable...
               child: FutureBuilder<String>(
                 future: fetchTeams(provider.groupId),
                 builder:
@@ -218,6 +217,7 @@ class _TeamState extends State<Team> {
   }
 
   Future<String> fetchTeams(groupId) async {
+    List<TeamCard> teams = [];
     User user = User.fromJson(await StorageService.readValue('user'));
 
     await DotEnv().load('.env');
@@ -229,8 +229,6 @@ class _TeamState extends State<Team> {
       'Content-Type': 'application/json; charset=UTF-8',
     });
 
-    print(response.body);
-
     Map<String, dynamic> data = jsonDecode(response.body);
     for (int i = 0; i < data['teams'].length; i++) {
       //_groups[data['groups'][i]['@id']] = data['groups'][i]['name'];
@@ -238,8 +236,10 @@ class _TeamState extends State<Team> {
       TeamCard team = new TeamCard(
           data['teams'][i]['id'].toString(), data['teams'][i]['name']);
 
-      _teams.add(team);
+      teams.add(team);
     }
+
+    _teams = teams;
 
     return response.body;
   }
