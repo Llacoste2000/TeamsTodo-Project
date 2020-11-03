@@ -16,6 +16,10 @@ class GlobalProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  User getUser(){
+    return this._user;
+  }
+
   void deleteUser() {
     this._user = null;
     notifyListeners();
